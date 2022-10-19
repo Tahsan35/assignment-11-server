@@ -1,8 +1,12 @@
 const express = require('express');
 const app = express();
-var cors = require('cors');
+const cors = require('cors');
+require('dotenv').config();
+const { MongoClient, ServerApiVersion } = require('mongodb');
 const port = process.env.PORT || 5000;
 
+//dbuser :dbusertahsan
+//pass: i7IM9cBas3TaLw0l
 
 //middleware
 app.use(cors())
@@ -36,3 +40,13 @@ const users = [
 app.listen(port, () => {
     console.log(`listening on port ${port}`)
 })
+
+
+const uri = "mongodb+srv://dbusertahsan:i7IM9cBas3TaLw0l@cluster0.v7opeaw.mongodb.net/?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
+client.connect(err => {
+    const collection = client.db("test").collection("devices");
+    console.log('db connected')
+    // perform actions on the collection object
+    client.close();
+});
