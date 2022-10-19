@@ -17,6 +17,8 @@ async function run() {
     try {
         await client.connect();
         const perfumeCollection = client.db("perfumeWareHouse").collection('perfume');
+        const uploadCollection = client.db("perfumeWareHouse").collection('upload');
+
 
         app.get('/perfume', async (req, res) => {
             const query = {};
@@ -29,6 +31,14 @@ async function run() {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
             const result = await perfumeCollection.findOne(query);
+            res.send(result);
+        });
+
+        // delete single item by id 
+        app.delete('/perfume/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await perfumeCollection.deleteOne(query);
             res.send(result);
         });
     }
