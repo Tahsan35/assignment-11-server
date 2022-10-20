@@ -59,7 +59,7 @@ async function run() {
                 $set: {
                     stock: updateStock.stock
                 }
-            }
+            };
             const result = await perfumeCollection.updateOne(filter, updatedDoc, option);
             res.send(result);
         });
@@ -70,7 +70,6 @@ async function run() {
             const result = await perfumeCollection.deleteOne(query);
             res.send(result);
         });
-
 
         // delete upload item
         app.delete('/upload/:id', async (req, res) => {
@@ -84,7 +83,7 @@ async function run() {
             const newItem = req.body;
             const tokenInfo = req.headers.authorization;
             const [email, accessToken] = tokenInfo.split(" ");
-            const decoded = tokenVerify(accessToken)
+            const decoded = tokenVerify(accessToken);
             if (email === decoded.email) {
                 const result = await uploadCollection.insertOne(newItem);
                 res.send({ success: "upload SuccessFully" });
